@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="style.css">
+  <title>EventInfo - Keypress  and Keydown Event visualizers.</title>
+  <meta name="description" content="Event.info provides a good visualization about javascript keypress and keydown event. This websites also provide with the information of charCode,key,which and location properties.">
+</head>
+<body>
+  <div class="main">
+    <div class="header">
+      <div class="event">
+          <a href="index.html">EventInfo</a>
+      </div>
+      <div class="other">
+        <div class="home"><a href="index.html">Home</a></div>
+      </div>
+    </div>
+    <div class="container" id="content">
+      <div class="value">
+              <div class="left">
+                <h1>Keypress event</h1>
+                <canvas id="left-canvas" width="300px" height="150px">Your browser don't support canvas.</canvas>
+              </div>
+              <div class="right">
+                <h1>Keydown Event</h1>
+                <canvas id="right-canvas" width="300px" height="150px">Your browser don't support canvas.</canvas>
+              </div>
+      </div>
+      <div class="show">
+        <div class="keypress">
+            <div class="which">
+                 <div class="head">event.which</div>
+                 <div class="val" id="keypress-which">0</div>
+            </div>
+            <div class="charcodeAt">
+              <div class="head">event.charCode</div>
+              <div class="val" id="keypress-charCode">0</div>
+            </div>
+            <div class="key">
+              <div class="head">event.key</div>
+              <div class="val" id="keypress-key">0</div>
+            </div>
+            <div class="location">
+              <div class="head">event.location</div>
+              <div class="val" id="keypress-Location">0</div>
+            </div>
+            <div class="code">
+              <div class="head">event.code</div>
+              <div class="val" id="keypress-Code">0</div>
+            </div>
+        </div>
+        <div class="keyDown">
+          <div class="which">
+               <div class="head">event.which</div>
+               <div class="val" id="keydown-which">0</div>
+          </div>
+          <div class="charcodeAt">
+            <div class="head">event.charCode</div>
+            <div class="val" id="keydown-charCode">0</div>
+          </div>
+          <div class="key">
+            <div class="head">event.key</div>
+            <div class="val" id="keydown-key">0</div>
+          </div>
+          <div class="location">
+            <div class="head">event.location</div>
+            <div class="val" id="keydown-Location">0</div>
+          </div>
+          <div class="code">
+            <div class="head">event.code</div>
+            <div class="val" id="keydown-Code">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <span class="name">This website is devloped by <b>Muhammad Ismail</b>
+      </span>
+      <span class="follow">Follow me @ <a href="https://www.linkedin.com/in/mohammad-ismail-814b79206/"><i class="fab fa-linkedin-in"></i> </a><a href="https://www.facebook.com/ismail.buet/"><i class="fab fa-facebook"></i></a> <a href="https://twitter.com/M_Ismail_Mirza"><i class="fab fa-twitter"></i></a><a href="https://github.com/Ismail-Mirza"><i class="fab fa-github"></i></a></span>
+    </div>
+  </div>
+
+  <div class="modal" id="modal">
+    <h2>Press Any Key To Watch The Difference.</h2>
+  </div>
+
+
+<script type="text/javascript">
+  var leftCanvas = document.getElementById("left-canvas");
+  console.log(`Canvas width ${leftCanvas.width} Canvas height ${leftCanvas.height}`);
+  let leftWidth =leftCanvas.width;
+  let leftHeight =leftCanvas.height;
+  var leftCtx = leftCanvas.getContext("2d");
+
+  leftCtx.font = "100px Arial";
+  leftCtx.fillStyle="#171717";
+  leftCtx.textAlign="center";
+  leftCtx.fillText("100",leftWidth/2,leftWidth/2-30);
+  var rightCanvas = document.getElementById("right-canvas");
+  let rightWidth =rightCanvas.width;
+  let rightHeight =rightCanvas.height;
+  var rightCtx = rightCanvas.getContext("2d");
+
+  rightCtx.font = "100px Arial";
+  rightCtx.fillStyle="#171717";
+  rightCtx.textAlign="center";
+  rightCtx.fillText("100",rightWidth/2,rightWidth/2-30);
+  var keypressWhich = document.getElementById("keypress-which");
+  var keypressCharCode = document.getElementById("keypress-charCode");
+  var keypressKey = document.getElementById("keypress-key");
+  var keypressLocation = document.getElementById("keypress-Location");
+  var keypressCode = document.getElementById("keypress-Code");
+  var keyDownWhich = document.getElementById("keydown-which");
+  var keyDownCharCode = document.getElementById("keydown-charCode");
+  var keyDownKey = document.getElementById("keydown-key");
+  var keyDownLocation = document.getElementById("keydown-Location");
+  var keyDownCode = document.getElementById("keydown-Code");
+  var content = document.getElementById("content");
+  var modal = document.getElementById("modal");
+
+  window.addEventListener("keypress",(event)=>{
+        let key =true;
+        for(classes of modal.classList){
+           if (classes == "modal-disable"){
+                key =false;
+                console.log("key set to false");
+           }
+        }
+        if (key==true){
+          //hide modal and show container
+          content.classList.add("container-active");
+          modal.classList.add("modal-disable");
+        }
+        let mycharCode = event.charCode;
+        let mywhich = event.which;
+        let myCode = event.code;
+        let mykey=event.key;
+        let mylocation = event.location;
+        keypressWhich.innerHTML=mywhich;
+        keypressCharCode.innerHTML=mycharCode;
+        keypressKey.innerHTML=mykey;
+        keypressLocation.innerHTML=mylocation;
+        keypressCode.innerHTML=myCode;
+        var leftCanvas = document.getElementById("left-canvas");
+        let leftWidth =leftCanvas.width;
+        let leftHeight =leftCanvas.height;
+        var leftCtx = leftCanvas.getContext("2d");
+        leftCtx.clearRect(0, 0, leftWidth, leftHeight);
+        leftCtx.font = "100px Arial";
+        leftCtx.fillStyle="#171717";
+        leftCtx.textAlign="center";
+        leftCtx.fillText(`${mywhich}`,leftWidth/2,leftWidth/2-30);
+  });
+  window.addEventListener("keydown",(event)=>{
+        let mycharCode = event.charCode;
+        let mywhich = event.which;
+        let myCode = event.code;
+        let mykey=event.key;
+        let mylocation = event.location;
+        keyDownWhich.innerHTML=mywhich;
+        keyDownCharCode.innerHTML=mycharCode;
+        keyDownKey.innerHTML=mykey;
+        keyDownLocation.innerHTML=mylocation;
+        keyDownCode.innerHTML=myCode;
+        var rightCanvas = document.getElementById("right-canvas");
+        let rightWidth =rightCanvas.width;
+        let rightHeight =rightCanvas.height;
+        var rightCtx = rightCanvas.getContext("2d");
+        rightCtx.clearRect(0, 0, rightWidth, rightHeight);
+        rightCtx.font = "100px Arial";
+        rightCtx.fillStyle="#171717";
+        rightCtx.textAlign="center";
+        rightCtx.fillText(`${mywhich}`,rightWidth/2,rightWidth/2-30);
+  });
+
+</script>
+</body>
+</html>
